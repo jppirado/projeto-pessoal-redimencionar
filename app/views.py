@@ -1,23 +1,24 @@
-from django.shortcuts import render
-from .forms import ImagemModelForm
+
+from .models import tratarImagem
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy 
+from django.contrib import messages
+
+from django.views.generic import TemplateView
+from PIL import Image
+
+
 # Create your views here.
 
-def home( request ):
-
-    if str(request.method) == 'POST':
-        form = ImagemModelForm( request.POST, request.FILES or None)
-        print( form )
-        if form.is_valid():
-            form.save()
-            form = ImagemModelForm()
-    else:
-        form = ImagemModelForm() 
+class IndexView(CreateView):
+    
+    model = tratarImagem
+    template_name = 'home.html'
+    fields = ['imagem' ,'x' , 'y' , ]
+    success_url = reverse_lazy('successurl')
 
 
-    ctx = {
-        'form' : form
-    }
-
-    return render( request  , 'home.html' , ctx )
+class SuccessPageView( TemplateView ):
+    template_name = 'success_page.html'
 
 

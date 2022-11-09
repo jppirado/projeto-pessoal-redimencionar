@@ -1,7 +1,8 @@
 from django.urls import path
 
-from .views import home 
+from .views import IndexView , SuccessPageView
 
 urlpatterns = [
-    path('' , home , name='index')
+    path('' , IndexView.as_view(), name='index'),
+    path('success/' , SuccessPageView.as_view() , name='successurl')
 ]
